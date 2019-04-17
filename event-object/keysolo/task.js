@@ -16,14 +16,25 @@ class Game {
     this.lossElement.textContent = 0;
   }
 
-  registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-     */
+  registerEvents() {	
+	StartTimer ("timerId", this);
+    let index = 0;
+    const that = this;
+    document.onkeypress = function(event) {
+      const symbol = document.body.querySelectorAll(".symbol");
+      let arr = Array.from(symbol);
+      if (arr[index].textContent == event.key.toLowerCase()) {
+        index += 1;
+        StopTimer ("timerId");
+        that.success();
+        if (index  == (arr.length)){
+          index = 0;
+        }
+      } else {
+      	StopTimer ("timerId");
+        that.fail()
+      }
+    }
   }
 
   success() {
@@ -84,6 +95,16 @@ class Game {
 
     this.currentSymbol = this.wordElement.querySelector('.symbol_current');
   }
+}
+
+function StartTimer (timerId, that) {
+	const allSymbol = document.body.querySelectorAll(".symbol");
+    let arrSymbol = Array.from(allSymbol);
+    timerId = setTimeout(function() {that.fail()}, arrSymbol.length*1000);
+}
+
+function StopTimer (timerId) {
+	clearTimeout(timerId)
 }
 
 new Game(document.getElementById('game'))
