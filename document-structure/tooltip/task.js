@@ -1,35 +1,32 @@
-let showTitle;
-
 let hasTooltip = document.querySelectorAll('.has-tooltip');
+let titleElem = document.querySelector('.tooltip');
+
+if (titleElem) {
+    titleElem.classList.remove('tooltip_active');
+}
+
+
 for (let has of hasTooltip) {
     has.addEventListener('click', function (event) {
-       
-        if (showTitle) {
-            document.body.removeChild(showTitle);
-            showTitle = null;
-            return
-        }
-        
-        let target = event.target;
-        let title = target.getAttribute('data-title');
-        if (!title) return;
-        let titleElem = document.createElement('div');
-        titleElem.className = 'tooltip';
-        titleElem.innerHTML = title;
-        target.after(titleElem);
+        event.preventDefault();
+        titleElem.classList.add('tooltip_active');
+        titleElem.innerText = event.target.title;
 
-        let coords = target.getBoundingClientRect();
-        let left = coords.left + (target.offsetWidth - titleElem.offsetWidth) / 2;
-        if (left < 0) left = 0;
-        
-        let top = coords.top - titleElem.offsetHeight - 5;
-        if (top < 0) {
-            top = coords.top + target.offsetHeight + 5;
-            
-        }
-        titleElem.style.left = left + 'px';
-        titleElem.style.top = top + 'px';
-
-        showTitle = titleElem;
+        titleElem.style.left = setPosition(event.target.getBoundingClientRect())[0]  +  'px';
+        titleElem.style.top = setPosition(event.target.getBoundingClientRect())[1]  + 'px';
     })
+}
+
+function setPosition (coords) {
+    
+    let left = coords.left + (event.target.offsetWidth - titleElem.offsetWidth) / 2;
+    if (left < 0) left = 0;
+    
+    let top = coords.top - titleElem.offsetHeight - 5;
+    if (top < 0) {
+        top = coords.top + event.target.offsetHeight + 5;
+        
+    }
+
+    return([left, top])
 }
