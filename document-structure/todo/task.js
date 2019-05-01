@@ -44,14 +44,9 @@ function removeTask(event) {
 
     let key = event.target.closest('.task').querySelector('.task__title').textContent.trim();
 
-    for (let item of JSON.parse(localStorage.tasks)) {
-        if (key === item) {
-
-            localTasks = JSON.parse(localStorage.tasks);
-            localTasks.splice(localTasks.indexOf(key), 1);
-            localStorage.tasks = JSON.stringify(localTasks);
-        }
-    }
+    localTasks = JSON.parse(localStorage.tasks);
+    localTasks.splice(localTasks.indexOf(key), 1);
+    localStorage.tasks = JSON.stringify(localTasks);
 
 }
 
@@ -75,5 +70,6 @@ function init() {
         }
         canBeDeleted();
     }
-}3
+}
+
 init();
