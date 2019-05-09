@@ -7,7 +7,7 @@ httpRequesting.send();
 httpRequesting.addEventListener('readystatechange',()=>{
     if(httpRequesting.readyState == 4 && httpRequesting.status == 200){
         let response = JSON.parse(httpRequesting.responseText);
-        pollTitle.textContent = response.data.pollTitle;
+        pollTitle.textContent = response.data.title;
 
         for(let i=0;i<response.data.answers.length;i++){
             pollAnswers.innerHTML +=`
