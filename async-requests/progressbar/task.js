@@ -7,7 +7,8 @@ form.addEventListener('submit', (e)=>{
     httpRequesting.open('POST','https://netology-slow-rest.herokuapp.com/upload.php');
 
     httpRequesting.upload.addEventListener('progress',(event)=>{
-        let percentComplete = (event.loaded/event.total);
+    	let percentComplete = 0;
+        event.total == 0 ? percentComplete = 0 : percentComplete = (event.loaded/event.total);
         progressBar.value = percentComplete;
     })
     
